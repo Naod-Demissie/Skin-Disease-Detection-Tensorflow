@@ -1,0 +1,15 @@
+tqdm
+numpy
+pandas
+matplotlib
+opencv-python
+albumentations
+
+ipykernel
+ipywidgets
+
+tensorflow
+scikit-learn
+
+tensorboard
+keras-tuner
