@@ -1,3 +1,4 @@
+import os
 import sys
 import cv2
 import numpy as np
@@ -5,24 +6,20 @@ import pandas as pd
 import albumentations as A
 import math
 
-from glob import glob
-
 from sklearn.model_selection import GroupShuffleSplit
 from tensorflow.keras.utils import Sequence, to_categorical
 
-from typing import List, Tuple
-
-sys.path.append('..')
-from sys.config import BATCH_SIZE, TARGET_SIZE, NUM_CLASSES, DATA_DIR
+sys.path.append(os.getcwd())
+from src.config import BATCH_SIZE, TARGET_SIZE, NUM_CLASSES, DATA_DIR
 
 
 # Custom Data Generator
 class ImageDataGenerator(Sequence):
     def __init__(
             self, 
+            base_model_name: str,
             df: pd.DataFrame, 
             batch_size: int, 
-            targe_size: Tuple[int], 
             n_classes: int, 
             shuffle: bool =True, 
             training: bool =True
@@ -32,7 +29,7 @@ class ImageDataGenerator(Sequence):
         self.batch_size = batch_size
         self.shuffle = shuffle
         self.indexes = np.arange(len(self.df))
-        self.targe_size = targe_size[:-1]
+        self.targe_size = TARGET_SIZE[base_model_name][:-1]
         self.n_classes = n_classes
         self.training = training
         self.on_epoch_end()
@@ -94,31 +91,3 @@ val_df = train_val_df.iloc[val_idx]
 train_df.reset_index(drop=True, inplace=True)
 val_df.reset_index(drop=True, inplace=True)
 test_df.reset_index(drop=True, inplace=True)
-
-
-train_generator = ImageDataGenerator(
-    df=train_df, 
-    batch_size=BATCH_SIZE, 
-    targe_size=TARGET_SIZE, 
-    n_classes=NUM_CLASSES, 
-    shuffle=True, 
-    training=True
-)
-val_generator = ImageDataGenerator(
-    df=val_df, 
-    batch_size=BATCH_SIZE, 
-    targe_size=TARGET_SIZE, 
-    n_classes=NUM_CLASSES, 
-    shuffle=True, 
-    training=True
-)
-test_generator = ImageDataGenerator(
-    df=test_df, 
-    batch_size=BATCH_SIZE, 
-    targe_size=TARGET_SIZE, 
-    n_classes=NUM_CLASSES, 
-    shuffle=False, 
-    training=False
-)
-
-

@@ -5,18 +5,18 @@ from tensorflow.keras.applications import (EfficientNetV2B0, EfficientNetV2B1,
                                            EfficientNetV2S, EfficientNetV2M)
 
 
-BATCH_SIZE = 24
+BATCH_SIZE = 16
 NUM_CLASSES = 3
-NUM_EPOCHS = 50
+NUM_EPOCHS = 20
 
 # paths
-ROOT_DIR = os.getcwd()
-# DATA_DIR = 
-TB_LOG_DIR  = f'D:/Projects/Skin-Disease-Detection-Tensorflow/logs/tensorboard'
-TUNER_DIR = f'{TB_LOG_DIR}/tuner'
+ROOT_DIR = "C:/Users/AII/Documents/Naod-Documents/Skin-Disease-Detection-Tensorflow"
+DATA_DIR = 'C:/Users/AII/Documents/Olyad/test/Skin-Disease-Detection-Pytorch/data/raw'
 
-CSV_LOG_DIR  = f'D:/Projects/Skin-Disease-Detection-Tensorflow/logs/'
-CKPT_DIR  = f'D:/Projects/Skin-Disease-Detection-Tensorflow/checkpoints/'
+CSV_LOG_DIR  = f'{ROOT_DIR}/logs/csv_logs'
+TB_LOG_DIR  = f'{ROOT_DIR}/logs/tensorboard'
+TUNER_DIR = f'{TB_LOG_DIR}/tuner'
+CKPT_DIR  = f'{ROOT_DIR}/checkpoints/'
 
 
 TARGET_SIZE = {
@@ -43,13 +43,5 @@ def get_base_model(base_model_name):
         EfficientNetV2S(include_top=False, input_shape=(384, 384, 3), pooling='avg') if base_model_name == 'efficientnetv2-s' else
         EfficientNetV2M(include_top=False, input_shape=(480, 480, 3), pooling='avg')
     )
-
-
-
-
-
-
-
-
 
 
